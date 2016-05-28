@@ -44,4 +44,22 @@ describe "count_living_neighbors" do
     expect(count_living_neighbors("12", board)).to eq 2
     expect(count_living_neighbors("21", board)).to eq 3
   end
+
+end
+
+describe "mark_board" do
+  it "should return an array" do
+    board = [["01", "11", "01"],
+             ["01", "11", "11"],
+             ["11", "01", "01"]]
+    expect(mark_board(board)).to be_a Array
+  end
+
+  it "should designate dying cells to die" do
+    board = [["01", "11", "01"],
+             ["01", "01", "11"],
+             ["11", "01", "01"]]
+    expect(mark_board(board)[2][0]).to eq "10"
+    expect(mark_board(board)[0][1]).to eq "10"
+  end
 end

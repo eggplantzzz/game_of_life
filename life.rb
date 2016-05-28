@@ -1,14 +1,23 @@
 
 
-grid = []
 
-# puts "Length?"
-# board_length = gets.chomp
 
+def create_new_board()
+  puts "How long would you like the board to be?"
+  board_length = (gets.chomp).to_i
+  init_board(board_length)
+end
+
+# def render_board(board)
+#   board_length = board.length
+#   for i in 1..board.length
+#     puts board[i - 1]
+#   end
+# end
 
 # Sets up an array to model the board for the game
 # Takes the board length as a parameter and returns an array
-def init_grid(length)
+def init_board(length)
   i = 0
   board = []
 
@@ -233,18 +242,68 @@ def count_living_neighbors(coord, board)
 end
 
 
-# # Iterates through the board and calls decide_fate to mark cells
-# # for death or life
-# def iterate_through_board
-#
-#   # Pending
-#
-# end
-#
-#
+# Iterates through the board and calls count_living_neighbors to mark cells
+# for death or life
+def mark_board(board)
+  i = 0
+  while (i < board.length)
+
+    i2 = 0
+
+    while (i2 < board.length)
+      if (board[i][i2][0] == "1" &&
+          count_living_neighbors(i.to_s + i2.to_s, board) < 2)
+        board[i][i2][1] = "0"
+      elsif (board[i][i2][0] == "1" &&
+            (count_living_neighbors(i.to_s + i2.to_s, board) == 2 ||
+             count_living_neighbors(i.to_s + i2.to_s, board) == 3))
+        board[i][i2][1] = "1"
+      elsif (board[i][i2][0] == "1" &&
+             count_living_neighbors(i.to_s + i2.to_s, board) > 3)
+        board[i][i2][1] = "0"
+      elsif (board[i][i2][0] == "0" &&
+             count_living_neighbors(i.to_s + i2.to_s, board) == 3)
+        board[i][i2][1] = "1"
+      end
+      i2 += 1
+    end
+    i += 1
+
+  end
+  board
+end
+
+
 # # Iterates through the board and sets the cells to alive or dad
-# def change_board_to_next_stage(board)
-#
-#   # Pending
-#
+def next_stage(board)
+  i = 0
+  while (i < board.length)
+    i2 = 0
+    while (i2 < board.length)
+      if board[i][i2][1] == "0"
+        board[i][i2][0] = "0"
+      else board[i][i2][1] == "1"
+        board[i][i2][0] = "1"
+      end
+      i2 += 1
+    end
+    i += 1
+  end
+  board
+end
+
+# again = true
+# def run(board, length)
+#   mark_board(board)
+#   next_stage(board)
+# end
+
+# while again? do
+#   puts "Next stage? y/n"
+#   y_n = gets.chomp
+#   if y_n == "y"
+#     run(grid, board_length)
+#   else
+#     again? = false
+#   end
 # end
