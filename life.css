@@ -1,0 +1,39 @@
+body {
+  background-color: orange;
+  text-align: center;
+}
+
+table {
+  display: inline;
+  border-collapse: collapse;
+}
+
+td {
+  height: 20px;
+  width: 20px;
+  background-color: yellow;
+  margin: 0px;
+  border-style: solid;
+  border-color: lightgrey;
+  border-size: 1px;
+}
+
+.alive {
+  background-color: red;
+}
+
+.dead {
+  background-color: black;
+}
+
+.button {
+  font-family: Arial;
+  float: right;
+  border-radius: 10pt;
+  height: 40px;
+  width: 100px;
+  background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
