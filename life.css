@@ -31,9 +31,6 @@ td {
   float: right;
   border-radius: 10pt;
   height: 40px;
-  width: 100px;
+  width: 140px;
   background-color: lightgrey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

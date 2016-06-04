@@ -1,20 +1,20 @@
 $(document).ready(function() {
 
-  var length = prompt("How long?");
+  var length = prompt("What length grid would you like?");
 
 
 /* Generates a grid for the given length               */
 /* Allows the user to designate cells as dead or alive */
-  for (i = 0; i < length; i += 1) {
-    $("#board").append("<tr id=\"" + i + "\">");
+  for (index = 0; index < length; index += 1) {
+    $("#board").append("<tr id=\"" + index + "\">");
 
-    for (i2 = 0; i2 < length; i2 += 1) {
-      $("#" + i).append("<td class=\" dead " + i2 +"\"></td>");
-      $("#" + i + " ." + i2).on("click", function() {
-        if ($(this).hasClass("dead")) {
+    for (index2 = 0; index2 < length; index2 += 1) {
+      $("#" + index).append("<td class=\" dead " + index2 +"\"></td>");
+      $("#" + index + " ." + index2).on("click", function() {
+        if($(this).hasClass("dead")) {
           $(this).removeClass("dead");
           $(this).addClass("alive");
-        } else {
+        }else {
           $(this).removeClass("alive");
           $(this).addClass("dead");
         }
@@ -23,8 +23,24 @@ $(document).ready(function() {
 
     $("#board").append("</tr>");
   };
-/* End generate grid                    */
-/* ************************************ */
+/* End generate grid  */
 
 
-});
+function display_board(board) {
+  for (index = 0; index < length; index += 1) {
+
+    for (index2 = 0; index2 < length; index2 += 1) {
+      if(board[index][index2][0] === "0") {
+        $("#" + index + " ." + index2).removeClass("alive").addClass("dead");
+      } else {
+        $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
+      }
+
+    }
+}
+
+
+
+
+
+}); /* End $(document).ready */

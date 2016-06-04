@@ -1,10 +1,8 @@
 
-
-
-
 /* Sets up an array to model the board for the game
-* Takes the board length as a parameter and returns an array */
-
+* Takes the board length as a parameter and returns an array
+* A 2 digit string denotes a cells current state and its next state
+* "0" for dead and "1" for live */
 function init_board(length) {
   var index = 0;
   var board = [];
@@ -15,6 +13,7 @@ function init_board(length) {
 
     while(index2 < length) {
 
+      /* Initialize all cells to be dead */
       board[index][index2] = "00";
       index2 += 1;
 
@@ -22,7 +21,7 @@ function init_board(length) {
       index += 1;
   }
   return board;
-}
+} /* End init_board function */
 
 
 
@@ -198,6 +197,45 @@ function count_living_neighbors(coord, board) {
 /* Iterates through the board and calls count_living_neighbors to mark cells
 * for death or life */
 function mark_board(board) {
+  var index = 0;
 
+  while(index < board.length) {
+    var index2 = 0;
 
+    while(index2 < board.length) {
+      if(board[index][index2][0] === "1" &&
+         count_living_neighbors(String(index) + String(index2), board) < 2 ||
+         count_living_neighbors(String(index) + String(index2) > 3, board)) {
+        board[index][index2][1] = "0";
+      }else if(board[index][index2][0] === "1" &&
+               count_living_neighbors(String(index) + String(index2) === 2, board) ||
+               count_living_neighbors(String(index) + String(index2) === 3, board)) {
+        board[index][index2][1] = "1";
+      }else if(board[index][index2][0] === "0" &&
+               count_living_neighbors(String(index) + String(index2) === 3, board)) {
+        board[index][index2][1] = "1";
+      }
+    }
+  }
 } /* End mark_board function */
+
+
+/* Sets the next stage of life */
+function set_next_stage(board) {
+  var index = 0;
+
+  while(index < board.length) {
+    var index2 = 0;
+
+    while(index2 < board.length) {
+      if(board[index][index2][1] === "0") {
+        board[index][index2][0] = "0";
+      }else {
+        board[index][index2][0] = "1";
+      }
+      index2 += 1;
+    }
+    index += 1;
+  }
+  return board;
+} /* End set_next_stage function */

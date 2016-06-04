@@ -40,7 +40,7 @@ def init_board(length)
 end
 
 
-# Analizes a given cell to determine whether it will live or die
+# Analyzes a given cell to determine whether it will live or die
 # in the next stage according to how many live cells surround it
 # Takes in a 2 char string(2 non negative integers) and a board (array)
 # Returns the number of living neighbors
@@ -282,7 +282,7 @@ def next_stage(board)
     while (i2 < board.length)
       if board[i][i2][1] == "0"
         board[i][i2][0] = "0"
-      else board[i][i2][1] == "1"
+      elsif board[i][i2][1] == "1"
         board[i][i2][0] = "1"
       end
       i2 += 1
