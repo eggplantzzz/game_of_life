@@ -4,11 +4,14 @@ $(document).ready(function() {
   $(".start").on("click", start);
   $(".next_stage").on("click", next_stage);
 
-
-  var length = parseInt(prompt("What size grid would you like?"));
+  var length;
 
   /* Initializes the array and view */
   function start() {
+
+    $("#board").html("");
+
+    length = parseInt(prompt("What size grid would you like?"));
 
     init_board(parseInt(length));
 
