@@ -10,18 +10,25 @@
 </head>
 <body>
   <h1>Conway's Game of Life</h1>
-  <div>
-    <input type="button" class="button reset" value="Reset"/>
-    <input type="button" class="button next_stage" value="See Next Stage"/>
-  </div>
+
 
   <div>
-    <table>
-      <tbody id="board">
-      </tbody>
-    </table>
+    <div id="button-container">
+      <input type="button" class="button reset" value="Reset"/>
+      <input type="button" class="button next_stage" value="See Next Stage"/>
+    </div>
+    <div id="board-container">
+      <table>
+        <tbody id="board">
+        </tbody>
+      </table>
+    </div>
+    <div id="key">
+      <p>red = live cell</p>
+      <p>black = dead cell</p>
+    </div>
   </div>
 
-  <p>Click on a cell to toggle it "alive" or "dead".  Click on the "See Next Stage" button to see the next stage of life.</p>
+  <p id="caption-text">Click on a cell to toggle it "alive" or "dead".  Click on the "See Next Stage" button to see the next stage of life.</p>
 </body>
 </html>

@@ -4,7 +4,7 @@ $(document).ready(function() {
   $(".reset").on("click", start);
   $(".next_stage").on("click", next_stage);
 
-  var LENGTH = 25;
+  var LENGTH = 23;
 
   /* Initializes the array and view */
   function start() {
