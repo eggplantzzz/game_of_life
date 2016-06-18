@@ -1,26 +1,24 @@
 $(document).ready(function() {
 
 
-  $(".start").on("click", start);
+  $(".reset").on("click", start);
   $(".next_stage").on("click", next_stage);
 
-  var length;
+  var LENGTH = 25;
 
   /* Initializes the array and view */
   function start() {
 
     $("#board").html("");
 
-    length = parseInt(prompt("What size grid would you like?"));
+    init_board(parseInt(LENGTH));
 
-    init_board(parseInt(length));
-
-    /* Generates a grid for the given length               */
+    /* Generates a grid              */
     /* Allows the user to designate cells as dead or alive */
-    for (index = 0; index < length; index += 1) {
+    for (index = 0; index < LENGTH; index += 1) {
       $("#board").append("<tr id=\"" + index + "\">");
 
-      for (index2 = 0; index2 < length; index2 += 1) {
+      for (index2 = 0; index2 < LENGTH; index2 += 1) {
         $("#" + index).append("<td class=\" dead " + index2 +"\"></td>");
         $("#" + index + " ." + index2).on("click", function() {
           if($(this).hasClass("dead")) {
@@ -42,15 +40,15 @@ $(document).ready(function() {
   * A 2 element denotes a cells current state and its next state
   * The first element is its current state and the second is its
   * next state.  "0" for dead and "1" for live */
-  function init_board(length) {
+  function init_board(LENGTH) {
     var index = 0;
     var board = [];
 
-    while(index < length) {
+    while(index < LENGTH) {
       var index2 = 0;
       board[index] = [];
 
-      while(index2 < length) {
+      while(index2 < LENGTH) {
 
         /* Initialize all cells to be dead */
         board[index][index2] = ["0", "0"];
@@ -64,8 +62,8 @@ $(document).ready(function() {
 
   /* Reads the html and syncs the array with it */
   /* Sig: Takes in a length and returns an array */
-  function set_array_from_html(length) {
-    var board = init_board(length);
+  function set_array_from_html(LENGTH) {
+    var board = init_board(LENGTH);
 
     var index = 0;
 
@@ -92,7 +90,7 @@ $(document).ready(function() {
   * cells current status to the next stage and updates the UI */
   function next_stage() {
 
-    var board = set_array_from_html(length);
+    var board = set_array_from_html(LENGTH);
     board = mark_board(board);
     board = mark_next_stage(board);
     set_html_from_array(board);
@@ -340,7 +338,7 @@ $(document).ready(function() {
     }
   }   /* End set_html_from_array function */
 
-  /* Testing */
-  // start();
+  /* Initializes board on the display */
+  start(LENGTH);
 
 }); /* End $(document).ready */
