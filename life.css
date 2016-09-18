@@ -42,7 +42,6 @@ td {
 
 #button-container {
   display: inline;
-  float: left;
   width: 200px;
   height: 200px;
   margin: 100px 0px 0px 200px;
@@ -54,9 +53,9 @@ td {
   border-style: solid;
   border-width: 1px;
   background-color: #FF6E30;
-  float: right;
   display: inline;
-  margin: 120px 200px 0px 0px;
+  margin-top: 100px;
+  padding:15px;
 }
 
 #caption-text {

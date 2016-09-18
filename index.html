@@ -2,6 +2,10 @@
 <html>
 <head>
 
+  <!-- Bootstrap CDN -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
   <script type="text/javascript" src="life.js"></script>
@@ -9,19 +13,19 @@
 
 </head>
 <body>
-  <h1>Conway's Game of Life</h1>
-  <div>
-    <div id="button-container">
+  <div class="container-fluid">
+    <div id="button-container" class="col-lg-2">
       <input type="button" class="button reset" value="Reset"/>
       <input type="button" class="button next_stage" value="See Next Stage"/>
     </div>
-    <div id="board-container">
+    <div id="board-container" class="col-lg-6">
       <table>
+        <h1>Conway's Game of Life</h1>
         <tbody id="board">
         </tbody>
       </table>
     </div>
-    <div id="key">
+    <div id="key" class="col-lg-3">
       <p>red = live cell</p>
       <p>black = dead cell</p>
     </div>
