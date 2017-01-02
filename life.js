@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     init_board(parseInt(LENGTH));
 
-    /* Generates a grid              */
+    /* Generates a grid                                    */
     /* Allows the user to designate cells as dead or alive */
     for (index = 0; index < LENGTH; index += 1) {
       $("#board").append("<tr id=\"" + index + "\">");
@@ -32,7 +32,7 @@ $(document).ready(function() {
       }
       $("#board").append("</tr>");
     };  /* End view generation  */
-  } /* End start */
+  }     /* End start            */
 
 
   /* Sets up an array to model the board for the game
@@ -60,7 +60,7 @@ $(document).ready(function() {
     return board;
   } /* End init_board function */
 
-  /* Reads the html and syncs the array with it */
+  /* Reads the html and syncs the array with it  */
   /* Sig: Takes in a length and returns an array */
   function set_array_from_html(LENGTH) {
     var board = init_board(LENGTH);
@@ -105,19 +105,13 @@ $(document).ready(function() {
       var index2 = 0;
 
       while(index2 < board.length) {
+        var living_neighbors = count_living_neighbors([index, index2], board);
 
-        if(board[index][index2][0] === "1" &&
-           (count_living_neighbors([index, index2], board) < 2 ||
-           count_living_neighbors([index, index2], board) > 3)) {
+        if(board[index][index2][0] === "1" && (living_neighbors < 2 || living_neighbors > 3)) {
           board[index][index2][1] = "0";
-
-        }else if(board[index][index2][0] === "1" &&
-                 (count_living_neighbors([index, index2], board) === 2 ||
-                 count_living_neighbors([index, index2], board) === 3)) {
+        }else if(board[index][index2][0] === "1" && (living_neighbors === 2 || living_neighbors === 3)) {
           board[index][index2][1] = "1";
-
-        }else if(board[index][index2][0] === "0" &&
-                 count_living_neighbors([index, index2], board) === 3) {
+        }else if(board[index][index2][0] === "0" && living_neighbors === 3) {
           board[index][index2][1] = "1";
         }
         index2 += 1;
