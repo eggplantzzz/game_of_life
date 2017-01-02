@@ -91,13 +91,12 @@ $(document).ready(function() {
   function next_stage() {
 
     var board = set_array_from_html(LENGTH);
-    board = mark_board(board);
-    set_html_from_array(board);
+    board = markBoardAndSetHTML(board);
   } /* End next_stage function */
 
   /* Iterates through the board and calls count_living_neighbors to mark cells
   * for death or life */
-  function mark_board(board) {
+  function markBoardAndSetHTML(board) {
     var index = 0;
 
     while(index < board.length) {
@@ -109,12 +108,15 @@ $(document).ready(function() {
         if(board[index][index2][0] === "1" && (living_neighbors < 2 || living_neighbors > 3)) {
           board[index][index2][1] = "0";
           board[index][index2][0] = "0";
+          $("#" + index + " ." + index2).removeClass("alive").addClass("dead");
         }else if(board[index][index2][0] === "1" && (living_neighbors === 2 || living_neighbors === 3)) {
           board[index][index2][1] = "1";
           board[index][index2][0] = "1";
+          $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
         }else if(board[index][index2][0] === "0" && living_neighbors === 3) {
           board[index][index2][1] = "1";
           board[index][index2][0] = "1";
+          $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
         }
         index2 += 1;
       }
@@ -122,7 +124,6 @@ $(document).ready(function() {
     }
     return board
   } /* End mark_board function */
-
 
   /* Counts the number of living neighbors for a cell.
   * Takes in a 2 element array (integer strings)
@@ -292,25 +293,6 @@ $(document).ready(function() {
     }
     return count
   }; /* End count_living_neighbors function */
-
-  /* Renders the current board state */
-  function set_html_from_array(board) {
-    var index = 0;
-
-    while(index < board.length) {
-      var index2 = 0;
-
-      while(index2 < board.length) {
-        if(board[index][index2][0] === "0") {
-          $("#" + index + " ." + index2).removeClass("alive").addClass("dead");
-        } else {
-          $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
-        }
-      index2 +=1
-      }
-    index += 1;
-    }
-  }   /* End set_html_from_array function */
 
   /* Initializes board on the display */
   start(LENGTH);
