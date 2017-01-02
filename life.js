@@ -92,7 +92,6 @@ $(document).ready(function() {
 
     var board = set_array_from_html(LENGTH);
     board = mark_board(board);
-    board = mark_next_stage(board);
     set_html_from_array(board);
   } /* End next_stage function */
 
@@ -109,10 +108,13 @@ $(document).ready(function() {
 
         if(board[index][index2][0] === "1" && (living_neighbors < 2 || living_neighbors > 3)) {
           board[index][index2][1] = "0";
+          board[index][index2][0] = "0";
         }else if(board[index][index2][0] === "1" && (living_neighbors === 2 || living_neighbors === 3)) {
           board[index][index2][1] = "1";
+          board[index][index2][0] = "1";
         }else if(board[index][index2][0] === "0" && living_neighbors === 3) {
           board[index][index2][1] = "1";
+          board[index][index2][0] = "1";
         }
         index2 += 1;
       }
@@ -120,6 +122,7 @@ $(document).ready(function() {
     }
     return board
   } /* End mark_board function */
+
 
   /* Counts the number of living neighbors for a cell.
   * Takes in a 2 element array (integer strings)
@@ -134,9 +137,9 @@ $(document).ready(function() {
 
     /* If it is not an edge cell */
     if (!(x === 0 ||
-        y === 0 ||
-        x === (board.length - 1) ||
-        y === (board.length - 1))) {
+          y === 0 ||
+          x === (board.length - 1) ||
+          y === (board.length - 1))) {
 
       /* Count living neighbors clockwise from upper left cell */
       if(board[x - 1][y - 1][0] === "1" ) {
@@ -289,29 +292,6 @@ $(document).ready(function() {
     }
     return count
   }; /* End count_living_neighbors function */
-
-
-  /* Sets the next stage of life */
-  /* Takes in an array and returns an array */
-  function mark_next_stage(board) {
-
-    var index = 0;
-
-    while(index < board.length) {
-      var index2 = 0;
-
-      while(index2 < board.length) {
-        if(board[index][index2][1] === "0") {
-          board[index][index2][0] = "0";
-        }else {
-          board[index][index2][0] = "1";
-        }
-        index2 += 1;
-      }
-      index += 1;
-    }
-    return board;
-  } /* End mark_next_stage function */
 
   /* Renders the current board state */
   function set_html_from_array(board) {
