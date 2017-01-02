@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 
   $(".reset").on("click", start);
-  $(".next_stage").on("click", next_stage);
+  $(".next_stage").on("click", nextStage);
 
   var LENGTH = 23;
 
@@ -11,9 +11,9 @@ $(document).ready(function() {
 
     $("#board").html("");
 
-    init_board(parseInt(LENGTH));
+    initBoard(parseInt(LENGTH));
 
-    /* Generates a grid              */
+    /* Generates a grid                                    */
     /* Allows the user to designate cells as dead or alive */
     for (index = 0; index < LENGTH; index += 1) {
       $("#board").append("<tr id=\"" + index + "\">");
@@ -32,7 +32,7 @@ $(document).ready(function() {
       }
       $("#board").append("</tr>");
     };  /* End view generation  */
-  } /* End start */
+  }     /* End start            */
 
 
   /* Sets up an array to model the board for the game
@@ -40,7 +40,7 @@ $(document).ready(function() {
   * A 2 element denotes a cells current state and its next state
   * The first element is its current state and the second is its
   * next state.  "0" for dead and "1" for live */
-  function init_board(LENGTH) {
+  function initBoard(LENGTH) {
     var index = 0;
     var board = [];
 
@@ -58,12 +58,12 @@ $(document).ready(function() {
         index += 1;
     }
     return board;
-  } /* End init_board function */
+  } /* End initBoard function */
 
-  /* Reads the html and syncs the array with it */
+  /* Reads the html and syncs the array with it  */
   /* Sig: Takes in a length and returns an array */
-  function set_array_from_html(LENGTH) {
-    var board = init_board(LENGTH);
+  function setArrayFromHTML(LENGTH) {
+    var board = initBoard(LENGTH);
 
     var index = 0;
 
@@ -88,17 +88,43 @@ $(document).ready(function() {
   * Sets the array from the current html state, then calculates
   * the status of cells for the next stage. Then it changes the
   * cells current status to the next stage and updates the UI */
-  function next_stage() {
+  function nextStage() {
 
-    var board = set_array_from_html(LENGTH);
-    board = mark_board(board);
-    board = mark_next_stage(board);
-    set_html_from_array(board);
-  } /* End next_stage function */
+    var board = setArrayFromHTML(LENGTH);
+    board = calculateAndSetNextStage(board);
+    board = markBoardAndSetHTML(board);
+  } /* End nextStage function */
+
+  /* Iterates through the board and calls count_living_neighbors to mark cells
+* for death or life */
+  function calculateAndSetNextStage(board) {
+
+    var index = 0;
+
+    while(index < board.length) {
+      var index2 = 0;
+
+      while(index2 < board.length) {
+        var living_neighbors = count_living_neighbors([index, index2], board)
+
+        if(board[index][index2][0] === "1" && (living_neighbors < 2 || living_neighbors > 3)) {
+          board[index][index2][1] = "0";
+        }else if(board[index][index2][0] === "1" && (living_neighbors === 2 || living_neighbors === 3)) {
+          board[index][index2][1] = "1";
+        }else if(board[index][index2][0] === "0" && living_neighbors === 3) {
+          board[index][index2][1] = "1";
+        }
+        index2 += 1;
+      }
+      index += 1;
+    }
+    return board
+  } /* End calculateAndSetNextStage function */
+
 
   /* Iterates through the board and calls count_living_neighbors to mark cells
   * for death or life */
-  function mark_board(board) {
+  function markBoardAndSetHTML(board) {
     var index = 0;
 
     while(index < board.length) {
@@ -106,19 +132,12 @@ $(document).ready(function() {
 
       while(index2 < board.length) {
 
-        if(board[index][index2][0] === "1" &&
-           (count_living_neighbors([index, index2], board) < 2 ||
-           count_living_neighbors([index, index2], board) > 3)) {
-          board[index][index2][1] = "0";
-
-        }else if(board[index][index2][0] === "1" &&
-                 (count_living_neighbors([index, index2], board) === 2 ||
-                 count_living_neighbors([index, index2], board) === 3)) {
-          board[index][index2][1] = "1";
-
-        }else if(board[index][index2][0] === "0" &&
-                 count_living_neighbors([index, index2], board) === 3) {
-          board[index][index2][1] = "1";
+        if(board[index][index2][1] === "0") {
+          board[index][index2][0] = "0";
+          $("#" + index + " ." + index2).removeClass("alive").addClass("dead");
+        }else {
+          board[index][index2][0] = "1";
+          $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
         }
         index2 += 1;
       }
@@ -140,9 +159,9 @@ $(document).ready(function() {
 
     /* If it is not an edge cell */
     if (!(x === 0 ||
-        y === 0 ||
-        x === (board.length - 1) ||
-        y === (board.length - 1))) {
+          y === 0 ||
+          x === (board.length - 1) ||
+          y === (board.length - 1))) {
 
       /* Count living neighbors clockwise from upper left cell */
       if(board[x - 1][y - 1][0] === "1" ) {
@@ -295,48 +314,6 @@ $(document).ready(function() {
     }
     return count
   }; /* End count_living_neighbors function */
-
-
-  /* Sets the next stage of life */
-  /* Takes in an array and returns an array */
-  function mark_next_stage(board) {
-
-    var index = 0;
-
-    while(index < board.length) {
-      var index2 = 0;
-
-      while(index2 < board.length) {
-        if(board[index][index2][1] === "0") {
-          board[index][index2][0] = "0";
-        }else {
-          board[index][index2][0] = "1";
-        }
-        index2 += 1;
-      }
-      index += 1;
-    }
-    return board;
-  } /* End mark_next_stage function */
-
-  /* Renders the current board state */
-  function set_html_from_array(board) {
-    var index = 0;
-
-    while(index < board.length) {
-      var index2 = 0;
-
-      while(index2 < board.length) {
-        if(board[index][index2][0] === "0") {
-          $("#" + index + " ." + index2).removeClass("alive").addClass("dead");
-        } else {
-          $("#" + index + " ." + index2).removeClass("dead").addClass("alive");
-        }
-      index2 +=1
-      }
-    index += 1;
-    }
-  }   /* End set_html_from_array function */
 
   /* Initializes board on the display */
   start(LENGTH);
